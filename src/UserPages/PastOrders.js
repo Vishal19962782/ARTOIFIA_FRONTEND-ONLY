@@ -79,7 +79,7 @@ function PastOrders() {
       })}
       {orders?.length == 0 ? (
         <Box>
-          <Typography variant="h6" sx={{ opacity: "0.5" }} textAlign={"center"}>
+          <Typography sx={{color:"text.primary"}} variant="h6" sx={{ opacity: "0.5" }} textAlign={"center"}>
             NO Posts Purchased
           </Typography>
         </Box>

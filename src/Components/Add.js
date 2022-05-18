@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   Divider,
   Fab,
   Grid,
@@ -21,6 +22,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useDispatch } from "react-redux";
 import { pushPosts } from "../features/PostSlice";
+import { LoadingButton } from "@mui/lab";
 const StyledModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
@@ -35,6 +37,7 @@ const UserBox = styled(Box)({
 function Add() {
   const dispatch = useDispatch();
   const fileInput = useRef();
+  const [loading, setLoading] = useState(false);
   const [img, setImg] = useState("");
   const [text, setText] = useState("");
   const [open, setOpen] = React.useState(false);
@@ -42,6 +45,7 @@ function Add() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
+    setLoading(true);
     axios
       .post("/api/user", data)
       .then((res) => {
@@ -49,12 +53,14 @@ function Add() {
         dispatch(pushPosts({ payload: res.data }));
         setOpen(false);
         Swal.fire("Success", "Your post has been added", "success");
+        setLoading(false);
       })
       .catch((e) => {
+        setOpen(false);
         Swal.fire("Error", "Something went wrong", "error");
       });
   };
-  const fileHandle = (e) => {
+  const fileHandle = (e) => { 
     setImg(e.target.files[0]);
   };
   function handleText(e) {
@@ -186,9 +192,9 @@ function Add() {
                 name="postDescription"
                 onChange={(e) => handleText(e)}
               />
-              <Button type="submit" variant="contained" color="primary">
+              <LoadingButton loading={loading} loadingIndicator={<CircularProgress/>} type="submit" variant="contained" color="primary">
                 submit
-              </Button>
+              </LoadingButton>
             </Grid>
           </Stack>
         </Paper>
