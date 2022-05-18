@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardMedia,
   Checkbox,
+  Chip,
   Collapse,
   IconButton,
   Paper,
@@ -28,8 +29,7 @@ import AnimationPages from "../../Outlets/AnimationPages";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 // import handleBid from "./Bidlogic";
 function Post(props) {
-  
-  // 
+  //
   const [post, setPost] = useState({});
   const navigate = useNavigate();
   const [bid, setBid] = useState("");
@@ -56,7 +56,6 @@ function Post(props) {
         setLikeNumber(likeNumber + 1);
       });
     } else {
-      
       Axios.patch("/api/user/unlike", { postId: post?._id }).then(() => {
         setLike(false);
         setLikeNumber(likeNumber - 1);
@@ -78,24 +77,25 @@ function Post(props) {
         Axios.put("/api/user/bid", {
           postId: post?._id,
           bid: bid,
-        }).then(() => {
-          Swal.fire({
-            title: "Bid Successful",
-            text: "You have successfully bid",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }).catch((err)=>{
-          Swal.fire({
-            title: "Bid Failed",
-            text: err.response.data.message,
-            icon: "error",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-
         })
+          .then(() => {
+            Swal.fire({
+              title: "Bid Successful",
+              text: "You have successfully bid",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((err) => {
+            Swal.fire({
+              title: "Bid Failed",
+              text: err.response.data.message,
+              icon: "error",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
       }
     });
   }
@@ -148,6 +148,7 @@ function Post(props) {
             direction={"row"}
             alignItems="center"
             justifyContent={"space-between"}
+            padding={1}
           >
             <CardActions disableSpacing>
               <Checkbox
@@ -170,7 +171,7 @@ function Post(props) {
               </IconButton>
               <Typography>{props.post?.bids.length}</Typography>
             </CardActions>
-            {status !== "Accepted" ? (
+            {status !== "Accepted" && status !== "Sold" ? (
               <Stack component="form" direction={"row"}>
                 <TextField
                   // height="1"
@@ -202,8 +203,12 @@ function Post(props) {
                 </IconButton>
               </Stack>
             ) : (
-              <Stack direction={"row"} bgcolor="#e8eaf6">
-                <Typography>This art is aleady sold</Typography>
+              <Stack direction={"row"}>
+                <Chip
+                  color="error"
+                  variant="outlined"
+                  label="This art is aleady sold"
+                />
               </Stack>
             )}
             {/* <BookmarkIcon mr={2} /> */}

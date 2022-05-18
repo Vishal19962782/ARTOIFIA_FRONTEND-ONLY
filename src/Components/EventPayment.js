@@ -3,7 +3,7 @@ import AxiosBase from "../api/AxiosBase";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import styled from "@emotion/styled";
-import { Button, Modal, Paper, Stack } from "@mui/material";
+import { Button, Modal, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
 import { IconButton } from "@mui/material";
 const StyledModal = styled(Modal)({
@@ -18,6 +18,7 @@ function EventPayment({ Event, quantity, setQuantity }) {
   const [orderAmount, setOrderAmount] = useState(1);
   const [orders, setOrders] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const availableTickets = Event.noOfTickets - Event.noOfTicketsSold;
   const handleOpen = () => setOpen(true);
   const handleCount = (method) => {
     if (method == "plus" && count < Event.noOfTickets - Event.noOfTicketsSold) {
@@ -83,8 +84,12 @@ function EventPayment({ Event, quantity, setQuantity }) {
             <IconButton onClick={() => handleCount("plus")} variant="">
               <AddIcon />
             </IconButton>
-            <Button variant="contained" onClick={() => loadRazorpay()}>
-              Buy {count} ticket{" "}
+            <Button
+              disabled={!availableTickets}
+              variant="contained"
+              onClick={() => loadRazorpay()}
+            >
+              {availableTickets?`Buy ${count} ticket${" "}`:"Sold Out"}
             </Button>
             <IconButton onClick={() => handleCount("minus")} variant="">
               <RemoveIcon />

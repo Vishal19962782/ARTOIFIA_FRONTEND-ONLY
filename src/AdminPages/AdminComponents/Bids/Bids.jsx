@@ -73,22 +73,7 @@ function Bids() {
             onClick={() => setCondition("all")}
             clickable
           />
-          <Chip
-            size="small"
-            variant="outlined"
-            color="primary"
-            label="Show users"
-            onClick={() => setCondition("0")}
-            clickable
-          />
-          <Chip
-            size="small"
-            variant="outlined"
-            color="primary"
-            label="Show artists"
-            onClick={() => setCondition("1")}
-            clickable
-          />
+        
         </Stack>
         <TableContainer component={Paper} elevation={9} sx={{ padding: "5px" }}>
           <Table sx={{ minWidth: 650 }}>
