@@ -16,6 +16,7 @@ import AxiosBase from "../api/AxiosBase";
 import AnimationPages from "../Outlets/AnimationPages";
 import Swal from "sweetalert2";
 import { useRef } from "react";
+
 function AddEventPage() {
   const hiddenFileInput = useRef(null);
   const [img, setImg] = React.useState("");

@@ -1,4 +1,13 @@
-import { Box, Fade, Modal, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Fade,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import CommentItem from "./CommentItem";
 import React from "react";
@@ -15,6 +24,12 @@ const StyledModal = styled(Modal)({
 const CommentBox = styled(Box)({
   display: "block",
   gap: "10",
+  maxHeight: "70vh",
+  // hide scrollbar
+  "&::-webkit-scrollbar": {
+    width: "5px",
+  },
+  overflowY: "scroll",
   maginBottom: "10",
 });
 
@@ -26,7 +41,7 @@ function CommentModal(props) {
   const handleClose = () => setOpen(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     Axios.post("/api/user/comment", {
       postId: props?.postId,
       comment: comment,
@@ -35,9 +50,7 @@ function CommentModal(props) {
         setCommentList(res.data.postComments);
         props.setCommentNumber(props.commentNumber + 1);
       })
-      .catch((err) => {
-        
-      });
+      .catch((err) => {});
   };
 
   return (
@@ -52,17 +65,21 @@ function CommentModal(props) {
         open={open}
       >
         <Fade in={open}>
-          <Box
+          <Paper
             bgcolor={"white"}
             width="80%"
-            height="75%"
             display="flex"
+            sx={{
+              minWidth: { sm: "400px", md: "600px" },
+              maxHeight: "90vh",
+              padding: "10px",
+              borderRadius: "10px",
+            }}
             flexDirection={"column"}
             justifyContent="Space-between"
             borderRadius={5}
-            padding={5}
           >
-            <CommentBox>
+            <Container>
               <Stack direction={"row"} justifyContent={"space-between"}>
                 <Typography
                   id="transition-modal-title"
@@ -75,38 +92,40 @@ function CommentModal(props) {
                   <CloseIcon fontSize="medium" onClick={() => setOpen(!open)} />
                 </IconButton>
               </Stack>
-              <Stack justifyContent={"space-between"}>
-                <Stack>
-                  <CommentItem comments={commentList} />
+              <CommentBox>
+                <Stack justifyContent={"space-between"}>
+                  <Stack>
+                    <CommentItem comments={commentList} />
+                  </Stack>
                 </Stack>
-              </Stack>
-            </CommentBox>
-            <Stack
-              direction={"column"}
-              display="flex"
-              justifyContent={"flex-end"}
-              alignContent="flex-end"
-            >
-              <Box
+              </CommentBox>
+              <Stack
+                direction={"column"}
                 display="flex"
-                component="form"
-                onSubmit={handleSubmit}
-                alignItems={"center"}
+                justifyContent={"flex-end"}
+                alignContent="flex-end"
               >
-                <TextField
-                  multiline
-                  rows={2}
-                  variant="filled"
-                  sx={{ width: { xs: "95%" }, backgroundColor: "primary" }}
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                />
-                <IconButton type="submit" size="large">
-                  <SendIcon />
-                </IconButton>
-              </Box>
-            </Stack>
-          </Box>
+                <Box
+                  display="flex"
+                  component="form"
+                  onSubmit={handleSubmit}
+                  alignItems={"center"}
+                >
+                  <TextField
+                    multiline
+                    rows={2}
+                    variant="filled"
+                    sx={{ width: { xs: "95%" }, backgroundColor: "primary" }}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                  <IconButton type="submit" size="large">
+                    <SendIcon />
+                  </IconButton>
+                </Box>
+              </Stack>
+            </Container>
+          </Paper>
         </Fade>
       </StyledModal>
     </div>
