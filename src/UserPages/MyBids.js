@@ -1,4 +1,4 @@
-import { Button, Container, Divider, Stack } from "@mui/material";
+import { Button, Container, Divider, Skeleton, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import AxiosBase from "../api/AxiosBase";
@@ -10,10 +10,12 @@ function MyBids() {
   const userData = useSelector(getUser);
 
   const [postData, setPostData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   useEffect(() => {
     AxiosBase.get("/api/user/getBids").then((res) => {
       setPostData(res.data);
+      setLoading(false);
     });
   }, []);
   return (
@@ -24,7 +26,16 @@ function MyBids() {
           <Button onClick={() => setPage(2)}>Paid orders</Button>
         </Stack>
         <Divider />
-        {page == 1 ? (
+        {loading ? (
+        <Skeleton
+          sx={{ mt: "30px" }}
+          variant="rect"
+          animation="wave"
+          width="100%"
+          height={200}
+        />
+      ) : null}
+        {page == 1&&!loading ? (
           postData.bids?.map((item, index) => {
             return (
               <Stack p={2}>

@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Stack } from "@mui/material";
+import { Box, Button, Divider, Skeleton, Stack } from "@mui/material";
 import EventCard from "../Components/EventCard";
 import AxiosBase from "../api/AxiosBase";
 import { useEffect, useState } from "react";
@@ -14,11 +14,13 @@ const SButton = styled(Button)({
 
 function EventsPage() {
   const user = useSelector(getUser);
+  const [loading, setLoading] = useState(true);
   const [event, setEvent] = useState([]);
   const [page, setPage] = useState(1);
   useEffect(() => {
     AxiosBase.get("/api/Events/getEvents").then((res) => {
       setEvent(res.data);
+      setLoading(false);
     });
   }, []);
   return (
@@ -52,8 +54,16 @@ function EventsPage() {
         ) : null}
       </Stack>
       <Divider />
-
-      {page == 1 ? (
+      {loading ? (
+        <Skeleton
+          sx={{ mt: "30px" }}
+          variant="rect"
+          animation="wave"
+          width="100%"
+          height={200}
+        />
+      ) : null}
+      {page == 1 && !loading ? (
         event.map((item, index) => {
           return <EventCard key={index} item={item} />;
         })

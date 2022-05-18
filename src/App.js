@@ -92,15 +92,13 @@ function App() {
                 <Route path=":id" element={<ArtistPortfolio />} />
               </Route>
             </Route>
-            {UserData?.isAdmin ? (
-              <Route path="/Admin" element={<AdminDash />}>
-                <Route path="" element={<AdminDashpage />} />
-                <Route path="users" element={<UserTable />} />
-                <Route path="Requests" element={<Requests />} />
-                <Route path="Bids" element={<Bids />} />
-                <Route path="user/:id" element={<UserIn />} />
-              </Route>
-            ) : null}
+            <Route path="/Admin" element={<AdminDash />}>
+              <Route path="" element={<AdminDashpage />} />
+              <Route path="users" element={<UserTable />} />
+              <Route path="Requests" element={<Requests />} />
+              <Route path="Bids" element={<Bids />} />
+              <Route path="user/:id" element={<UserIn />} />
+            </Route>
           </Routes>
         </Router>
       </CssBaseline>
