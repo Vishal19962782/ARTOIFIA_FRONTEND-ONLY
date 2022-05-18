@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getUser } from "../features/Userslice";
 import { useRef } from "react";
-const socket = io("http://localhost:9000");
+const socket = io("/");
 function Rightbar() {
   const user = useSelector(getUser);
   const messageEndRef = useRef(null);

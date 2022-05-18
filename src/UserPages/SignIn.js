@@ -11,6 +11,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Paper } from "@mui/material";
+import AxiosBase from "../api/AxiosBase";
 
 function Copyright(props) {
   return (
@@ -41,8 +42,8 @@ export default function SignIn({ setLog }) {
     formState: { errors },
   } = useForm();
   const onSubmit = async (event) => {
-    axios
-      .post("http://localhost:9000/route", {
+    AxiosBase
+      .post("/route", {
         email: event.email,
         password: event.password,
       })

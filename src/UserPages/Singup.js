@@ -19,6 +19,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { ErrorMessage } from "@hookform/error-message";
 import { NavLink } from "react-router-dom";
+import AxiosBase from "../api/AxiosBase";
 function Copyright(props) {
   return (
     <Typography
@@ -123,7 +124,7 @@ export default function SignUp() {
   const handleOtp = async () => {
     // const number = getValues("phoneNo");
 
-    axios.post("http://localhost:9000/route/getOtp", {
+    AxiosBase.post("/route/getOtp", {
       phoneNo: "+" + number,
     });
   };
