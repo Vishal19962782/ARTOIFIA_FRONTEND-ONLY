@@ -23,7 +23,7 @@ function Homepage({setTheme,theme}) {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
-    document.title = "Homepage";
+    document.title = "Artofia";
     const Local = JSON.parse(localStorage.getItem("token"));
     
 

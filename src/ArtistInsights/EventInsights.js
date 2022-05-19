@@ -5,14 +5,12 @@ import { useEffect } from "react";
 import AxiosBase from "../api/AxiosBase";
 import EventTable from "./EventTable";
 function EventInsights() {
-  const [data, setData] = React.useState({});
+  const [data, setData] = React.useState(null);
   useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await AxiosBase.get("/api/ArtistInsight");
+    AxiosBase.get("/api/ArtistInsight").then(({ data }) => {
       console.log(data);
       setData(data);
-    };
-    fetchData();
+    });
   }, []);
   return (
     <Grid sx={{ mt: "20px" }} gap={1} justifyContent="space-evenly" container>
@@ -25,7 +23,7 @@ function EventInsights() {
             <Stack direction alignItems={"center"}>
               <CurrencyRupeeIcon />
               <Typography variant="h3" fontSize={60}>
-                {data?.postRevenue + data?.eventRevenue?.eventRevenue}
+              {parseInt(data?.eventRevenue[0].total)+parseInt(data?.postRevenue[0].total)}
               </Typography>
             </Stack>
           </Stack>
@@ -40,7 +38,7 @@ function EventInsights() {
             </Typography>
             <Stack direction alignItems={"center"}>
               <Typography variant="h2" fontSize={60}>
-                {data?.eventRevenue?.eventRevenue}
+                {data?.eventRevenue[0].total}
               </Typography>
               <CurrencyRupeeIcon />
             </Stack>
@@ -55,7 +53,7 @@ function EventInsights() {
             </Typography>
             <Stack direction alignItems={"center"}>
               <Typography variant="h2" fontSize={60}>
-                {data?.postRevenue}
+                {data?.postRevenue[0]?.total}
               </Typography>
               <CurrencyRupeeIcon />
             </Stack>
@@ -70,9 +68,7 @@ function EventInsights() {
             </Typography>
             <Stack direction alignItems={"center"}>
               <Typography variant="h3" fontSize={60}>
-                {JSON.stringify(
-                  data?.posts?.filter((item) => item?.Status == "Sold")?.length
-                )}
+                {data?.postRevenue[0].count}
               </Typography>
             </Stack>
           </Stack>
@@ -86,7 +82,7 @@ function EventInsights() {
               EVENTS HOSTED
             </Typography>
             <Typography variant="h2" fontSize={60}>
-              {data?.events?.length}
+              {data?.event?.length}
             </Typography>
           </Stack>
         </Paper>
@@ -98,14 +94,14 @@ function EventInsights() {
               TICKETS SOLD
             </Typography>
             <Typography variant="h2" fontSize={60}>
-              {data?.eventRevenue?.no}
+              {data?.eventRevenue[0]?.count}
             </Typography>
           </Stack>
         </Paper>
       </Grid>
       <Divider />
       <Grid item xs={5} lg={12}>
-        <EventTable event={data?.events} />
+        <EventTable event={data?.event} />
       </Grid>
     </Grid>
   );

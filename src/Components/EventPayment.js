@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import { Button, Modal, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
 import { IconButton } from "@mui/material";
+import Swal from "sweetalert2";
 const StyledModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
@@ -62,14 +63,19 @@ function EventPayment({ Event, quantity, setQuantity }) {
               itemType: "Event",
               orderItem: Event._id,
               noOfTickets: count,
+            }).then(() => {
+              Swal.fire({
+                title: "Payment Successful",
+                text: "Your payment has been successful",
+                icon: "success",
+              });
             });
-            alert(result.data.msg);
           },
         };
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
       } catch (err) {
-        alert("errorrrr" + err);
+        alert("error" + err);
         setLoading(false);
       }
     };
@@ -89,7 +95,7 @@ function EventPayment({ Event, quantity, setQuantity }) {
               variant="contained"
               onClick={() => loadRazorpay()}
             >
-              {availableTickets?`Buy ${count} ticket${" "}`:"Sold Out"}
+              {availableTickets ? `Buy ${count} ticket${" "}` : "Sold Out"}
             </Button>
             <IconButton onClick={() => handleCount("minus")} variant="">
               <RemoveIcon />

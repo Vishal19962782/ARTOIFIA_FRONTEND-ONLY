@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
+import Swal from "sweetalert2";
 import AxiosBase from "../api/AxiosBase";
 function PaymentComponent({ order,setPage }) {
   
@@ -40,6 +41,11 @@ function PaymentComponent({ order,setPage }) {
               itemType: "Art",
               orderItem: order.postId._id,
             }).then(()=>{
+              Swal.fire({
+                title: "Payment Successful",
+                text: "Your payment has been successful",
+                icon: "success",
+              })
               setPage(2);
             })
           },

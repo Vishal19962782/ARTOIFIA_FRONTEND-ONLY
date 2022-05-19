@@ -2,7 +2,7 @@ import HomeFeed from "./Components/HomeFeed";
 import { Box } from "@mui/system";
 import SignIn from "./UserPages/SignIn";
 import SignUp from "./UserPages/Singup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Homepage from "./UserPages/Homepage";
 import UserPage from "./UserPages/UserPage";
@@ -33,6 +33,9 @@ function App() {
   const [theme, setTheme] = useState("dark");
   const [isloggedin, setIsloggedin] = useState(false);
   const UserData = useSelector(getUser);
+  useEffect(()=>{
+    document.title = "Artofia";
+  })
   const themeSelector = createTheme({
     palette: {
       mode: theme,
