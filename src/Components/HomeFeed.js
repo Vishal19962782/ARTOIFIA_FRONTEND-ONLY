@@ -12,22 +12,29 @@ function Feed() {
   const activepost = useSelector(getAllPosts);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAsyncPosts());
-    setTimeout(()=>{
-      setLoading(false)
-    },1000)
+    dispatch(fetchAsyncPosts())
+    setLoading(false);
   }, []);
 
   return (
     <>
-   { loading?(<AnimationPages>
-      <Skeleton variant="rect" animation="wave" width="80%" height="100%" />
-      <Skeleton  sx={{m:"10px"}} variant="circular" animation="wave" width="60px" height="60px" />
-      <Skeleton variant="rect" animation="wave" width="80%" height="70vh" />
-      </AnimationPages>):
-     ( activepost.map((item, index) => {
-        return <Post key={index} post={item} />;
-      }))}
+      {loading ? (
+        <AnimationPages>
+          <Skeleton variant="rect" animation="wave" width="80%" height="100%" />
+          <Skeleton
+            sx={{ m: "10px" }}
+            variant="circular"
+            animation="wave"
+            width="60px"
+            height="60px"
+          />
+          <Skeleton variant="rect" animation="wave" width="80%" height="70vh" />
+        </AnimationPages>
+      ) : (
+        activepost.map((item, index) => {
+          return <Post key={index} post={item} />;
+        })
+      )}
     </>
   );
 }
