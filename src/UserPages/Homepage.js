@@ -9,6 +9,7 @@ import Sidebar from "../Components/Sidebar";
 import Feedoutlet from "../Outlets/Feedoutlet";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserDetails, getUser } from "../features/Userslice";
+import AxiosBase from "../api/AxiosBase";
 
 function Homepage({setTheme,theme}) {
   const Userr = useSelector(getUser);
@@ -26,8 +27,8 @@ function Homepage({setTheme,theme}) {
     const Local = JSON.parse(localStorage.getItem("token"));
     
 
-    axios
-      .get("http://localhost:9000/route/homepage", {
+    AxiosBase
+      .get("/route/homepage", {
         headers: { accesstoken: "bearer " + JSON.stringify(Local.token) },
       })
       .then((res) => {

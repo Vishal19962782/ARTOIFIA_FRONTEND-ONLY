@@ -74,13 +74,9 @@ export default function SignUp() {
     data.append("Otp", event.Otp);
 
     try {
-      const call = await axios.post(
-        "http://localhost:9000/route/register",
-        data,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const call = await AxiosBase.post("/route/register", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (call.data.code == 304) {
         setError("Otp", { type: "costom", message: "Invalid OTP" });

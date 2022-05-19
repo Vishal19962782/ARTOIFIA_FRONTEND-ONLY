@@ -109,7 +109,6 @@ function PastOrders() {
           </Typography>
         </Box>
       ) : null}
-      )}
     </AnimationPages>
   );
 }

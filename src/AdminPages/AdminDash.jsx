@@ -7,7 +7,7 @@ function AdminDash() {
   const user = useSelector(getUser);
   const dispatch = useDispatch();
   useEffect(() => {
-    AxiosBase.get("http://localhost:9000/route/homepage")
+    AxiosBase.get("/route/homepage")
       .then((res) => {
         dispatch(addUserDetails(res.data));
         console.log(res.data);
