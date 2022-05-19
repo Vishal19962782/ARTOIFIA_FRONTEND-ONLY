@@ -7,14 +7,14 @@ function AdminApp() {
   return (
     <>
       <Grid container>
-        <Grid mt={8} item sm={12}  >
-          <Box sx={{position:"fixed"}} >
-          <Navbar />
+        <Grid mt={8} item sm={12}>
+          <Box sx={{ position: "fixed" }}>
+            <Navbar />
           </Box>
         </Grid>
-        <Grid item lg={2} md={2} >
-          <Box sx={{position:"fixed"}}>
-          <Sidebar />
+        <Grid item lg={2} md={2}>
+          <Box sx={{ position: "fixed" }}>
+            <Sidebar />
           </Box>
         </Grid>
         <Grid item lg={10}>
@@ -26,7 +26,7 @@ function AdminApp() {
               alignItems: "center",
             }}
           >
-         <AdminOutlet/>
+            <AdminOutlet />
           </Box>
         </Grid>
       </Grid>

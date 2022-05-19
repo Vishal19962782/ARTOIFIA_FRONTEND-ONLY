@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Chip,
   Grid,
   Paper,
   Stack,
@@ -42,7 +43,7 @@ function EventCard({ item }) {
             
             <Stack justifyContent={"space-between"} direction>
               <Typography variant="h4">{item?.eventName} </Typography>
-              <Typography variant="h6">{date.toDateString()}</Typography>
+              <Chip variant="outlined" label={date.toDateString()} />
 
               {!expire?(<Stack gap={1} alignItems={"center"}>
                 <Typography variant="h5">{item?.ticketPrice} ₹</Typography>

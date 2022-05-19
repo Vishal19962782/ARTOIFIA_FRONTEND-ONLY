@@ -49,7 +49,6 @@ function Add() {
     axios
       .post("/api/user", data)
       .then((res) => {
-        
         dispatch(pushPosts({ payload: res.data }));
         setOpen(false);
         Swal.fire("Success", "Your post has been added", "success");
@@ -60,7 +59,7 @@ function Add() {
         Swal.fire("Error", "Something went wrong", "error");
       });
   };
-  const fileHandle = (e) => { 
+  const fileHandle = (e) => {
     setImg(e.target.files[0]);
   };
   function handleText(e) {
@@ -71,10 +70,12 @@ function Add() {
       {/* <Tooltip > */}
       <Fab
         onClick={() => setOpen(true)}
+        
         sx={{
           position: "fixed",
           bottom: "20px",
           left: { xs: "45%", sm: "20px" },
+          zIndex:"99999"
         }}
         title="Add new post"
         placement="bottom-end"
@@ -85,7 +86,7 @@ function Add() {
       {/* </Tooltip> */}
       <StyledModal
         open={open}
-        sx={{zIndex:"99999"}}
+        sx={{ zIndex: "99999" }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -93,13 +94,16 @@ function Add() {
           display={"flex"}
           flexDirection="column"
           justifyContent={"space-between"}
-          
           width="70%"
           // sx={{height:"600px"}}
           bgcolor={"white"}
           borderRadius={5}
-          
-          sx={{borderRadius:'30px', webkitOverflowScrolling: "touch",zIndex:"999999",padding:"20px"}}
+          sx={{
+            borderRadius: "30px",
+            webkitOverflowScrolling: "touch",
+            zIndex: "999999",
+            padding: "20px",
+          }}
           p={3}
         >
           <Box>
@@ -112,15 +116,6 @@ function Add() {
               </IconButton>
             </Stack>
             <Divider sx={{ margin: "10px" }} />
-            <UserBox>
-              <Avatar
-                sx={{ height: "30px", width: "30px" }}
-                src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-              />
-              <Typography fontWeight={500} variant="span">
-                John bean
-              </Typography>
-            </UserBox>
           </Box>
           <Box
             maxWidth="sm"
@@ -156,6 +151,7 @@ function Add() {
                 component="Input"
                 ref={fileInput}
                 type="file"
+                required
                 name="image"
                 accept="image/*"
                 onChange={fileHandle}
@@ -166,6 +162,7 @@ function Add() {
                 id="outlined-basic"
                 label="Art Name"
                 fullWidth
+                required
                 multiline={true}
                 rows={2}
                 placeholder="Art Name"
@@ -176,7 +173,9 @@ function Add() {
                 id="outlined-basic"
                 label="Starting price"
                 fullWidth
+                required
                 multiline={true}
+                type="number"
                 rows={2}
                 placeholder="Art Price"
                 variant="filled"
@@ -187,12 +186,19 @@ function Add() {
                 fullWidth={true}
                 multiline={true}
                 rows={2}
+                
                 placeholder="Art Description"
                 variant="filled"
                 name="postDescription"
                 onChange={(e) => handleText(e)}
               />
-              <LoadingButton loading={loading} loadingIndicator={<CircularProgress/>} type="submit" variant="contained" color="primary">
+              <LoadingButton
+                loading={loading}
+                loadingIndicator={<CircularProgress />}
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
                 submit
               </LoadingButton>
             </Grid>

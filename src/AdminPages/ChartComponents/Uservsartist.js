@@ -18,7 +18,7 @@ export  function Uservsartist() {
       },
     };
     const data = {
-        labels: ['User', 'Artist'],
+        labels: ['Artists', 'Users'],
         datasets: [
           {
             label: '# of Votes',
@@ -38,9 +38,7 @@ export  function Uservsartist() {
         ],
       };
       useEffect(()=>{
-
           AxiosBase.get('api/trending/userVSartist').then((res)=>{
-              
               setUser(res.data)
           })
       },[])

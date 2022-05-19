@@ -61,7 +61,7 @@ function Sidebar({ setTheme, theme }) {
           sx={{
             width: "200px",
             position: "fixed",
-            top: "125px",
+            top: "90px",
             left: "0px",
             backgroundColor: "secondary",
             borderRadius: "0px 60px 60px 0px",
@@ -71,10 +71,11 @@ function Sidebar({ setTheme, theme }) {
               xs: open ? "none" : "block",
               md: "block",
             },
+            maxHeight:"90vh",
             zIndex: 9999,
           }}
         >
-          <List sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          <List sx={{ display: "flex", flexDirection: "column", gap: "13px" }}>
             <NavLink color="black"  to="/home" >
               <ListItem disablePadding>
                 <ListItemButton  >

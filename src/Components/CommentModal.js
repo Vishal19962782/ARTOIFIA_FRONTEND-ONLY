@@ -10,12 +10,13 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import CommentItem from "./CommentItem";
-import React from "react";
+import React, { useEffect } from "react";
 import { IconButton } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import styled from "@emotion/styled";
 import SendIcon from "@mui/icons-material/Send";
 import Axios from "./../api/AxiosBase";
+import Swal from "sweetalert2";
 const StyledModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
@@ -29,16 +30,21 @@ const CommentBox = styled(Box)({
   "&::-webkit-scrollbar": {
     width: "5px",
   },
+  border: "2px solid white",
   overflowY: "scroll",
   maginBottom: "10",
 });
 
 function CommentModal(props) {
   const [commentList, setCommentList] = React.useState(props.comments);
+  const hiddenScroller = React.useRef();
   const [open, setOpen] = React.useState(false);
   const [comment, setComment] = React.useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  useEffect(() => {
+    hiddenScroller.current?.scrollIntoView({ behavior: "smooth" });
+  }, [commentList]);
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -49,9 +55,18 @@ function CommentModal(props) {
       .then((res) => {
         setCommentList(res.data.postComments);
         props.setCommentNumber(props.commentNumber + 1);
+        setComment("");
       })
-      .catch((err) => {});
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
   };
+
+  hiddenScroller.current?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <div>

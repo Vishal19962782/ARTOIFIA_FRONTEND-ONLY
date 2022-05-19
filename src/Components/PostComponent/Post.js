@@ -173,26 +173,27 @@ function Post(props) {
             </CardActions>
             {status !== "Accepted" && status !== "Sold" ? (
               <Stack component="form" direction={"row"}>
-                <TextField
-                  // height="1"
-
-                  placeholder={"Min. Bid:" + props.post.minPrice}
-                  variant={"filled"}
-                  onChange={(e) => setBid(e.target.value)}
-                  value={bid}
-                  InputProps={{ style: { fontSize: 22 } }}
-                  error={bid ? props.post.minPrice > bid : false}
-                  helperText={
-                    bid
-                      ? props.post.minPrice > bid
-                        ? `Minimum Bid should be greater than Current Price ${props.post.minPrice}`
+                <Stack>
+                  <TextField
+                    placeholder={"Min. Bid:" + props.post.minPrice}
+                    variant={"filled"}
+                    onChange={(e) => setBid(e.target.value)}
+                    value={bid}
+                    // InputProps={{ style: { fontSize: 22 } }}
+                    error={bid ? props.post.minPrice > bid : false}
+                    helperText={
+                      bid
+                        ? props.post.minPrice > bid
+                          ? `Minimum Bid should be greater than Current Price ${props.post.minPrice}`
+                          : ""
                         : ""
-                      : ""
-                  }
-                  type="number"
-                  name="bid"
-                  sx={{ height: "20px", width: "200px" }}
-                />
+                    }
+                    type="number"
+                    name="bid"
+                    sx={{ height: "20px", width: "200px" }}
+                  />
+                
+                </Stack>
                 <IconButton
                   type="submit"
                   disabled={props.post.minPrice > bid}

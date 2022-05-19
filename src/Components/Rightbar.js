@@ -1,5 +1,14 @@
 import { Box } from "@mui/system";
-import { Avatar, Button, Divider, IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Divider,
+  IconButton,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import TrendingArts from "./TrendingArts";
 import TrendingArtists from "./TrendingArtists";
 import { useState } from "react";
@@ -27,21 +36,17 @@ function Rightbar() {
         });
         setMessages([...messages, { user: "me", message: text }]);
         setText("");
-      } catch (err) {
-        
-      }
+      } catch (err) {}
     }
   };
   useEffect(() => {
-    
-      socket.on("RecieveMessage", (data) => {
-          setMessages((messages) => [...messages, data]);
-          
-        });
-    }, [socket]);
-    useEffect(() => {
-      messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
+    socket.on("RecieveMessage", (data) => {
+      setMessages((messages) => [...messages, data]);
+    });
+  }, [socket]);
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   useEffect(() => {
     if (user.fname != undefined) {
       socket.emit("ping", {
@@ -49,28 +54,11 @@ function Rightbar() {
       });
     }
   }, [user]);
-//   useEffect(()=>{
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-//   },[])
+  //   useEffect(()=>{
+  messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  //   },[])
   return (
     <>
-      {/* <Stack
-        columnGap={3}
-        position={"fixed"}
-        sx={{
-          top: "70px",
-          right: "220px",
-          display: { sm: "none", xs: "none", md: "block" },
-        }}
-        direction
-      >
-        <Button onClick={() => setPage(2)} size="small" variant="contained">
-          chat
-        </Button>
-        <Button onClick={() => setPage(1)} size="small" variant="contained">
-          Trending
-        </Button>
-      </Stack> */}
       <Box
         border={"1px solid white"}
         sx={{ display: { sm: "none", xs: "none", md: "block" } }}
@@ -90,7 +78,8 @@ function Rightbar() {
             elevation={2}
             marginRight={"20px"}
           >
-            <Button fullWidth
+            <Button
+              fullWidth
               onClick={() => {
                 setPage(2);
               }}
@@ -120,7 +109,9 @@ function Rightbar() {
             elevation={2}
             marginRight={"20px"}
           >
-            <Button fullWidth variant="text"
+            <Button
+              fullWidth
+              variant="text"
               onClick={() => {
                 setPage(1);
               }}
@@ -145,8 +136,7 @@ function Rightbar() {
                     width: "0.5em",
                     // color:"red",
                     // background:"blue"
-                    },
-                  
+                  },
                 }}
               >
                 <ul>
@@ -154,23 +144,19 @@ function Rightbar() {
                     return (
                       <Box
                         display={"flex"}
-                   
                         flexDirection={
                           item.user == "me" ? "row-reverse" : "row"
                         }
-                        // justifyContent={
-                        //   item.user == "me" ? "flex-end" : "flex-start"
-                        // }
                         alignItems="center"
-                    
-                        // justifyContent="center"
                         gap="10px"
                       >
-                        <Stack  justifyContent={"center"} alignItems="center">
-                          <Avatar  src={item.avatar} />
-                          <Stack direction alignItems={"end"} justifyContent={"center"}>
-                            <Typography fontSize={10}>{item.user}:
-                            </Typography>
+                        <Stack justifyContent={"center"} alignItems="center">
+                          <Avatar src={item.avatar} />
+                          <Stack
+                            direction
+                            alignItems={"end"}
+                            justifyContent={"center"}
+                          >
                             <Typography fontSize={8} variant="h11">
                               {new Date().getHours() +
                                 ":" +
@@ -178,53 +164,27 @@ function Rightbar() {
                             </Typography>
                           </Stack>
                         </Stack>
-                        {/* <Box
-                          //   bgcolor={"red"}
-                          elevation={1}
-                          border={1}
-                         
-                          sx={{
-                            backgroundColor:
-                              item.user == "me"
-                                ? "primary.main"
-                                : "secondary.main",
-                            pl: "10px",
-                            pt: "0px",
-                            borderRadius:"30px",
-                            pb: "5px",
-                            pr: "20px",
-                            mt: "5px",
-                            borderRadius: "10px",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "1px",
-                          }}
-                        >
-                          <Typography fontSize={17} variant="h11">
-                            {item.message}
-                          </Typography>
-                        </Box> */}
-                        <Paper
-                          elevation={3}
-                          
-                          sx={{
-                            backgroundColor:item.user=="me"? "error.dark":"info.dark",
-                            p: "10px 15px 10px 15px",
-                            borderRadius: "13px",
-                            // display: "flex",
-                            flexDirection: "column",
-                            mt:"5px", 
-                            gap: "1px",
-                            color: "background.paper",
-                          }}
-                        >
-                          
-                            <Typography sx={{wordBreak:"break-word"}} >
-                    
+                        <Stack>
+                          <Paper
+                            elevation={3}
+                            sx={{
+                              backgroundColor:
+                                item.user == "me" ? "error.dark" : "info.dark",
+                              p: "10px 15px 10px 15px",
+                              borderRadius: "13px",
+                              // display: "flex",
+                              flexDirection: "column",
+                              mt: "5px",
+                              gap: "1px",
+                              color: "background.paper",
+                            }}
+                          >
+                            <Typography sx={{ wordBreak: "break-word" }}>
                               {item.message}
                             </Typography>
-                        
-                        </Paper>
+                          </Paper>
+                          <Typography  fontSize={10}>{item.user}</Typography>
+                        </Stack>
                       </Box>
                     );
                   })}
